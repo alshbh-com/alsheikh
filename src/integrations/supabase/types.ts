@@ -127,6 +127,62 @@ export type Database = {
           },
         ]
       }
+      companies: {
+        Row: {
+          agreement_price: number | null
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          agreement_price?: number | null
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          agreement_price?: number | null
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      company_payments: {
+        Row: {
+          amount: number | null
+          company_id: string
+          created_at: string
+          id: string
+          notes: string | null
+        }
+        Insert: {
+          amount?: number | null
+          company_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Update: {
+          amount?: number | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_payments_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       courier_bonuses: {
         Row: {
           amount: number | null
@@ -153,6 +209,41 @@ export type Database = {
           reason?: string | null
         }
         Relationships: []
+      }
+      courier_collections: {
+        Row: {
+          amount: number | null
+          collected_by: string | null
+          courier_id: string
+          created_at: string
+          id: string
+          order_id: string
+        }
+        Insert: {
+          amount?: number | null
+          collected_by?: string | null
+          courier_id: string
+          created_at?: string
+          id?: string
+          order_id: string
+        }
+        Update: {
+          amount?: number | null
+          collected_by?: string | null
+          courier_id?: string
+          created_at?: string
+          id?: string
+          order_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "courier_collections_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       courier_locations: {
         Row: {
@@ -232,7 +323,7 @@ export type Database = {
           closed_at?: string | null
           created_at?: string
           diary_date?: string
-          diary_number: number
+          diary_number?: number
           id?: string
           is_archived?: boolean | null
           is_closed?: boolean | null
@@ -609,6 +700,7 @@ export type Database = {
           address: string | null
           barcode: string | null
           color: string | null
+          company_id: string | null
           courier_id: string | null
           created_at: string
           customer_code: string | null
@@ -637,6 +729,7 @@ export type Database = {
           address?: string | null
           barcode?: string | null
           color?: string | null
+          company_id?: string | null
           courier_id?: string | null
           created_at?: string
           customer_code?: string | null
@@ -665,6 +758,7 @@ export type Database = {
           address?: string | null
           barcode?: string | null
           color?: string | null
+          company_id?: string | null
           courier_id?: string | null
           created_at?: string
           customer_code?: string | null
@@ -690,6 +784,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "orders_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "orders_office_id_fkey"
             columns: ["office_id"]
