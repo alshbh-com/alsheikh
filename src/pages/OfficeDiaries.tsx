@@ -65,7 +65,7 @@ export default function OfficeDiaries() {
     mutationFn: async () => {
       const { data, error } = await supabase
         .from('diaries')
-        .insert({ office_id: officeId!, diary_date: new Date().toISOString().split('T')[0] })
+        .insert({ office_id: officeId!, diary_date: new Date().toISOString().split('T')[0], diary_number: 0 })
         .select()
         .single();
       if (error) throw error;
