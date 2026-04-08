@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { LogOut, Eye, Phone, MessageSquare, Send, MapPin, AlertTriangle, Search, Camera } from 'lucide-react';
+import { LogOut, Eye, Phone, MessageSquare, Send, MapPin, AlertTriangle, Search, Camera, RefreshCw } from 'lucide-react';
 import BarcodeScanner from '@/components/BarcodeScanner';
 import { toast } from 'sonner';
 import { logActivity } from '@/lib/activityLogger';
@@ -262,6 +262,9 @@ export default function CourierOrders() {
         <div className="flex items-center justify-between">
           <h1 className="text-xl sm:text-2xl font-bold">أوردراتي</h1>
           <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" onClick={() => window.location.reload()} className="h-8 w-8" title="تحديث الصفحة">
+              <RefreshCw className="h-4 w-4" />
+            </Button>
             {locationGranted === true && (
               <Badge variant="default" className="text-xs gap-1">
                 <MapPin className="h-3 w-3" /> الموقع مفعّل
@@ -332,8 +335,9 @@ export default function CourierOrders() {
                     <TableHead className="w-10">ترتيب</TableHead>
                     <TableHead className="text-right">الكود</TableHead>
                     <TableHead className="text-right">العميل</TableHead>
-                    <TableHead className="text-right">العنوان</TableHead>
+                     <TableHead className="text-right">العنوان</TableHead>
                     <TableHead className="text-right">المنتج</TableHead>
+                    <TableHead className="text-right">الشحن</TableHead>
                     <TableHead className="text-right">الإجمالي</TableHead>
                     <TableHead className="text-right">الحالة</TableHead>
                     <TableHead className="text-right">تفاصيل</TableHead>
@@ -351,7 +355,7 @@ export default function CourierOrders() {
                         o.address?.toLowerCase().includes(s);
                     });
                     return filtered.length === 0 ? (
-                    <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">لا توجد أوردرات</TableCell></TableRow>
+                    <TableRow><TableCell colSpan={9} className="text-center text-muted-foreground py-8">لا توجد أوردرات</TableCell></TableRow>
                   ) : filtered.map((order, idx) => (
                     <TableRow key={order.id} className="border-border">
                       <TableCell>
@@ -366,8 +370,9 @@ export default function CourierOrders() {
                         {order.priority === 'vip' && <Badge className="mr-1 text-xs bg-amber-500">VIP</Badge>}
                       </TableCell>
                       <TableCell className="text-sm">{order.customer_name}</TableCell>
-                      <TableCell className="text-sm truncate max-w-[120px]">{order.address || '-'}</TableCell>
+                      <TableCell className="text-sm max-w-[200px] whitespace-normal break-words">{order.address || '-'}</TableCell>
                       <TableCell className="text-sm">{order.product_name}</TableCell>
+                      <TableCell className="text-sm text-muted-foreground">{Number(order.delivery_price)} ج.م</TableCell>
                       <TableCell className="font-bold text-sm">{Number(order.price) + Number(order.delivery_price)} ج.م</TableCell>
                       <TableCell>
                         <Select value={order.status_id || ''} onValueChange={(v) => updateStatus(order.id, v)}>
