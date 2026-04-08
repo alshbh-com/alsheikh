@@ -66,7 +66,7 @@ export default function PrintSticker() {
       const barcode = order.barcode || '';
       return `
         <div class="sticker">
-          <div class="header">الشيخ اكسبريس</div>
+          <div class="header">R&O Express</div>
           <div class="date">${new Date(order.created_at).toLocaleDateString('ar-EG')}</div>
           <div class="barcode-num">${barcode}</div>
           <div class="row"><span>الكود: <b>${order.customer_code || '-'}</b></span></div>
@@ -107,7 +107,7 @@ export default function PrintSticker() {
       const barcode = order.barcode || '';
       return `
         <div class="invoice-page">
-          <div class="header">الشيخ اكسبريس</div>
+          <div class="header">R&O Express</div>
           <div class="date">${new Date().toLocaleDateString('ar-EG')} - فاتورة ${i + 1} من ${selectedOrders.length}</div>
           <table>
             <tr><th>الكود</th><td>${order.customer_code || '-'}</td></tr>
@@ -192,7 +192,7 @@ export default function PrintSticker() {
                     <TableCell className="font-mono text-xs">{order.barcode || '-'}</TableCell>
                     <TableCell className="font-mono text-xs">{order.customer_code || '-'}</TableCell>
                     <TableCell className="text-sm">{order.customer_name}</TableCell>
-                    <TableCell className="text-sm truncate max-w-[120px]">{order.address || '-'}</TableCell>
+                    <TableCell className="text-sm max-w-[200px] whitespace-normal break-words">{order.address || '-'}</TableCell>
                     <TableCell dir="ltr" className="hidden sm:table-cell text-sm">{order.customer_phone}</TableCell>
                     <TableCell className="hidden sm:table-cell text-sm">{order.offices?.name || '-'}</TableCell>
                     <TableCell className="font-bold text-sm">{Number(order.price) + Number(order.delivery_price)} ج.م</TableCell>
