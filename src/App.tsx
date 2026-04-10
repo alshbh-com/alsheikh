@@ -1,132 +1,31 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import AppLayout from "@/components/AppLayout";
-import Login from "@/pages/Login";
-import Dashboard from "@/pages/Dashboard";
-import Orders from "@/pages/Orders";
-import UnassignedOrders from "@/pages/UnassignedOrders";
-import ClosedOrders from "@/pages/ClosedOrders";
-import GlobalSearch from "@/pages/GlobalSearch";
-import Offices from "@/pages/Offices";
-import DeliveryPrices from "@/pages/DeliveryPrices";
-import Products from "@/pages/Products";
-import Couriers from "@/pages/Couriers";
-import CourierCollections from "@/pages/CourierCollections";
-import OfficeAccounts from "@/pages/OfficeAccounts";
-import Advances from "@/pages/Advances";
-import PrintSticker from "@/pages/PrintSticker";
-import ActivityLogs from "@/pages/ActivityLogs";
-import Settings from "@/pages/Settings";
-import UsersPage from "@/pages/UsersPage";
-import CourierOrders from "@/pages/CourierOrders";
-import FinancialReports from "@/pages/FinancialReports";
-import CourierStats from "@/pages/CourierStats";
-import CourierTracking from "@/pages/CourierTracking";
-import InternalChat from "@/pages/InternalChat";
-import OfficeStats from "@/pages/OfficeStats";
-import CustomersPage from "@/pages/CustomersPage";
-import TrackingPage from "@/pages/TrackingPage";
-import DailyReport from "@/pages/DailyReport";
-import ProfitReport from "@/pages/ProfitReport";
-import StatusManagement from "@/pages/StatusManagement";
-import OrderNotes from "@/pages/OrderNotes";
-import DataExport from "@/pages/DataExport";
-import ExcelImport from "@/pages/ExcelImport";
-import OfficePortal from "@/pages/OfficePortal";
-import OfficeSettlement from "@/pages/OfficeSettlement";
-import DiaryOffices from "@/pages/DiaryOffices";
-import OfficeDiaries from "@/pages/OfficeDiaries";
-import DiaryView from "@/pages/DiaryView";
-import AccountingDashboard from "@/pages/AccountingDashboard";
-import AccountingLayout from "@/components/AccountingLayout";
-import OfficeReport from "@/pages/OfficeReport";
-import TrashBin from "@/pages/TrashBin";
-import SystemGuide from "@/pages/SystemGuide";
-import NotFound from "./pages/NotFound";
-
-const queryClient = new QueryClient();
-
-function LoginRedirect() {
-  const { session, loading } = useAuth();
-  if (loading) return null;
-  if (session) return <Navigate to="/" replace />;
-  return <Login />;
-}
+import { Package } from "lucide-react";
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <AuthProvider>
-          <Routes>
-            <Route path="/login" element={<LoginRedirect />} />
-            <Route path="/tracking" element={<TrackingPage />} />
-            <Route path="/courier-orders" element={
-              <ProtectedRoute><CourierOrders /></ProtectedRoute>
-            } />
-            <Route path="/office-portal" element={
-              <ProtectedRoute><OfficePortal /></ProtectedRoute>
-            } />
-            {/* Accounting System - separate full layout */}
-            <Route path="/accounting-system" element={
-              <ProtectedRoute requiredRole="owner_or_admin"><AccountingLayout /></ProtectedRoute>
-            }>
-              <Route index element={<DiaryOffices />} />
-              <Route path="offices/:officeId" element={<OfficeDiaries />} />
-              <Route path="offices/:officeId/diary/:diaryId" element={<DiaryView />} />
-              <Route path="dashboard" element={<AccountingDashboard />} />
-              <Route path="office-settlement" element={<OfficeSettlement />} />
-            </Route>
-            {/* Main shipping system */}
-            <Route element={
-              <ProtectedRoute requiredRole="owner_or_admin"><AppLayout /></ProtectedRoute>
-            }>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/unassigned-orders" element={<UnassignedOrders />} />
-              <Route path="/closed-orders" element={<ClosedOrders />} />
-              <Route path="/search" element={<GlobalSearch />} />
-              <Route path="/offices" element={<Offices />} />
-              <Route path="/delivery-prices" element={<DeliveryPrices />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/couriers" element={<Couriers />} />
-              <Route path="/users" element={<UsersPage />} />
-              <Route path="/customers" element={<CustomersPage />} />
-              <Route path="/courier-collections" element={<CourierCollections />} />
-              <Route path="/collections" element={<Navigate to="/courier-collections" replace />} />
-              <Route path="/office-accounts" element={<OfficeAccounts />} />
-              <Route path="/advances" element={<Advances />} />
-              <Route path="/print" element={<PrintSticker />} />
-              <Route path="/logs" element={<ActivityLogs />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/financial-reports" element={<FinancialReports />} />
-              <Route path="/courier-stats" element={<CourierStats />} />
-              <Route path="/courier-tracking" element={<CourierTracking />} />
-              <Route path="/office-stats" element={<OfficeStats />} />
-              <Route path="/daily-report" element={<DailyReport />} />
-              <Route path="/profit-report" element={<ProfitReport />} />
-              <Route path="/status-management" element={<StatusManagement />} />
-              <Route path="/order-notes" element={<OrderNotes />} />
-              <Route path="/data-export" element={<DataExport />} />
-              <Route path="/excel-import" element={<ExcelImport />} />
-              <Route path="/office-report" element={<OfficeReport />} />
-              <Route path="/trash" element={<TrashBin />} />
-              <Route path="/system-guide" element={<SystemGuide />} />
-              <Route path="/chat" element={<InternalChat />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-6" dir="rtl">
+    <div className="text-center max-w-lg space-y-8">
+      <div className="flex justify-center">
+        <img src="/lovable-uploads/logo.png" alt="R&O Express" className="h-24 w-24 rounded-2xl shadow-2xl" 
+          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+        />
+      </div>
+      <h1 className="text-4xl font-bold tracking-tight">R&O Express</h1>
+      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 space-y-4 border border-white/20">
+        <div className="flex justify-center">
+          <Package className="h-16 w-16 text-red-400" />
+        </div>
+        <h2 className="text-2xl font-semibold text-red-400">النظام متوقف مؤقتاً</h2>
+        <p className="text-gray-300 text-lg leading-relaxed">
+          النظام متوقف لحين طلب التعديلات
+        </p>
+        <div className="border-t border-white/20 pt-4 mt-4">
+          <p className="text-yellow-400 font-medium text-lg">
+            ⚡ النظام قابل للبيع لأي جهة أخرى في أي وقت
+          </p>
+        </div>
+      </div>
+      <p className="text-gray-500 text-sm">R&O Express © 2026</p>
+    </div>
+  </div>
 );
 
 export default App;
